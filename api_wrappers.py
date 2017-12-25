@@ -9,8 +9,8 @@ class CryptoMKT:
         response = requests.get('https://api.cryptomkt.com/v1/ticker',
                                 params=payload)
         response_json = response.json()
-        price_dict = {'bid': response_json['data'][0]['bid'],
-                      'ask': response_json['data'][0]['ask']}
+        price_dict = {'bid': int(response_json['data'][0]['bid']),
+                      'ask': int(response_json['data'][0]['ask'])}
         return price_dict
 
 
@@ -20,8 +20,8 @@ class SurBTC:
         response = requests.get(
             'https://www.surbtc.com/api/v2/markets/eth-clp/ticker.json')
         response_json = response.json()
-        price_dict = {'bid': response_json['ticker']['max_bid'][0],
-                      'ask': response_json['ticker']['min_ask'][0]}
+        price_dict = {'bid': int(float(response_json['ticker']['max_bid'][0])),
+                      'ask': int(float(response_json['ticker']['min_ask'][0]))}
         return price_dict
 
 
