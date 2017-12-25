@@ -1,4 +1,5 @@
 import requests
+import json
 
 
 class CryptoMKT:
@@ -15,7 +16,7 @@ class CryptoMKT:
 
 class SurBTC:
     @staticmethod
-    def get_ticker():
+    def get_prices():
         response = requests.get(
             'https://www.surbtc.com/api/v2/markets/eth-clp/ticker.json')
         json = response.json()
@@ -24,6 +25,16 @@ class SurBTC:
         return price_dict
 
 
-if __name__ == '__main__':
-    print(CryptoMKT.get_prices())
-    print(SurBTC.get_ticker())
+class Pushbullet:
+    def __init__(self, access_token):
+        self.access_token = access_token
+
+    def push_note(self, title, body, device_iden='ujBKQljDiTYsjAbxZrFbC8'):
+        headers = {'Access-Token': self.access_token,
+                   'Content-Type': 'application/json'}
+        data = {'device_iden': device_iden,
+                'title': title,
+                'body': body,
+                'type': 'note'}
+        requests.post('https://api.pushbullet.com/v2/pushes', headers=headers,
+                      data=json.dumps(data))
