@@ -30,7 +30,7 @@ class Pushbullet:
     def __init__(self, access_token):
         self.access_token = access_token
 
-    def push_note(self, title, body, device_iden=os.environ['device_iden']):
+    def push_note(self, title, body, device_iden=''):
         headers = {'Access-Token': self.access_token,
                    'Content-Type': 'application/json'}
         data = {'device_iden': device_iden,

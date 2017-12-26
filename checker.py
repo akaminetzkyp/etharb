@@ -4,7 +4,7 @@ import os
 
 
 def check_price_differences(threshold, check_delay):
-    pushbullet = Pushbullet(os.environ['pushbullet_token'])
+    pushbullet = Pushbullet('')
     while True:
         cryptomkt_prices = CryptoMKT.get_prices()
         surbtc_prices = SurBTC.get_prices()
