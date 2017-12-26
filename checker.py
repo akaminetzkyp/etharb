@@ -15,11 +15,13 @@ def check_price_differences(threshold, check_delay):
         if cryptomkt_prices['bid'] - surbtc_prices['ask'] >= threshold:
             title = 'Arbitrage oportunity!'
             body = ('CryptoMKT\'s bid is {}CLP greater than SurBTC\'s ask.'
-                    .format(threshold))
+                    .format(cryptomkt_prices['bid'] - surbtc_prices['ask']))
             pushbullet.push_note(title, body)
+            print(body)
         elif surbtc_prices['bid'] - cryptomkt_prices['ask'] >= threshold:
             title = 'Arbitrage oportunity!'
             body = ('SurBTC\'s bid is {}CLP greater than CryptoMKT\'s ask.'
-                    .format(threshold))
+                    .format(surbtc_prices['bid'] - cryptomkt_prices['ask']))
             pushbullet.push_note(title, body)
+            print(body)
         time.sleep(check_delay)
