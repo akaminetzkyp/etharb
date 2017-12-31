@@ -26,6 +26,31 @@ class SurBTC:
         return price_dict
 
 
+class Orionx:
+    @staticmethod
+    def get_prices():
+        url = 'http://api.orionx.io/graphql'
+        query = '''
+        query getOrderBook($marketCode: ID!) {
+            orderBook: marketOrderBook(marketCode: $marketCode) {
+                spread
+                mid
+            }
+        }
+        '''
+        request_json = {'query': query,
+                        'operationName': 'getOrderBook',
+                        'variables': {'marketCode': 'ETHCLP'}}
+
+        response = requests.post(url=url, json=request_json)
+        response_json = response.json()
+        spread = response_json['data']['orderBook']['spread']
+        mid = response_json['data']['orderBook']['mid']
+        price_dict = {'bid': int(mid - spread / 2),
+                      'ask': int(mid + spread / 2)}
+        return price_dict
+
+
 class Pushbullet:
     def __init__(self, access_token):
         self.access_token = access_token
